@@ -12,55 +12,55 @@ namespace JPDB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class CarsController : ControllerBase
     {
         private readonly JPDBContext _context;
 
-        public UsersController(JPDBContext context)
+        public CarsController(JPDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Cars
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Car>>> GetCar()
         {
-          if (_context.User == null)
+          if (_context.Car == null)
           {
               return NotFound();
           }
-            return await _context.User.ToListAsync();
+            return await _context.Car.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Cars/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Car>> GetCar(int id)
         {
-          if (_context.User == null)
+          if (_context.Car == null)
           {
               return NotFound();
           }
-            var user = await _context.User.FindAsync(id);
+            var car = await _context.Car.FindAsync(id);
 
-            if (user == null)
+            if (car == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return car;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Cars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutCar(int id, Car car)
         {
-            if (id != user.UserId)
+            if (id != car.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(car).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace JPDB.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!CarExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace JPDB.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Cars
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Car>> PostCar(Car car)
         {
-          if (_context.User == null)
+          if (_context.Car == null)
           {
-              return Problem("Entity set 'JPDBContext.User'  is null.");
+              return Problem("Entity set 'JPDBContext.Car'  is null.");
           }
-            _context.User.Add(user);
+            _context.Car.Add(car);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetCar", new { id = car.Id }, car);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Cars/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteCar(int id)
         {
-            if (_context.User == null)
+            if (_context.Car == null)
             {
                 return NotFound();
             }
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var car = await _context.Car.FindAsync(id);
+            if (car == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Car.Remove(car);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool CarExists(int id)
         {
-            return (_context.User?.Any(e => e.UserId == id)).GetValueOrDefault();
+            return (_context.Car?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

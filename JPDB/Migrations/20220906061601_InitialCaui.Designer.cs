@@ -4,6 +4,7 @@ using JPDB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JPDB.Migrations
 {
     [DbContext(typeof(JPDBContext))]
-    partial class JPDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220906061601_InitialCaui")]
+    partial class InitialCaui
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,22 +38,6 @@ namespace JPDB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Car");
-                });
-
-            modelBuilder.Entity("JPDB.Model.CarInputModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarInputModel");
                 });
 
             modelBuilder.Entity("JPDB.Model.CarOwner", b =>
@@ -102,31 +88,12 @@ namespace JPDB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OwnerName")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Owner");
-                });
-
-            modelBuilder.Entity("JPDB.Model.OwnerInputModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OwnerInputModel");
                 });
 
             modelBuilder.Entity("JPDB.Model.User", b =>

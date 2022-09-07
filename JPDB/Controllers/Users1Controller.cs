@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JPDB.Data;
 using JPDB.Model;
+using MessagePack;
 
 namespace JPDB.Controllers
 {
@@ -67,6 +68,27 @@ namespace JPDB.Controllers
 
             return users;
         }
+
+
+        [HttpGet("crypUsersCode/{cptId}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetCryptoUsersCode(int cpId)
+        {
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
+            var users = await _context.User.Where(row => row.CryptoId == cpId).ToListAsync();
+
+
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+            return users;
+        }
+
 
 
         // PUT: api/Users1/5

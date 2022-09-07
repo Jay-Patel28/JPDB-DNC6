@@ -4,6 +4,7 @@ using JPDB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JPDB.Migrations
 {
     [DbContext(typeof(JPDBContext))]
-    partial class JPDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220906060251_InitialCar12")]
+    partial class InitialCar12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,23 +40,7 @@ namespace JPDB.Migrations
                     b.ToTable("Car");
                 });
 
-            modelBuilder.Entity("JPDB.Model.CarInputModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarInputModel");
-                });
-
-            modelBuilder.Entity("JPDB.Model.CarOwner", b =>
+            modelBuilder.Entity("JPDB.Model.CarOwners", b =>
                 {
                     b.Property<int>("CarId")
                         .HasColumnType("int");
@@ -102,31 +88,12 @@ namespace JPDB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OwnerName")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Owner");
-                });
-
-            modelBuilder.Entity("JPDB.Model.OwnerInputModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OwnerInputModel");
                 });
 
             modelBuilder.Entity("JPDB.Model.User", b =>
@@ -150,23 +117,19 @@ namespace JPDB.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("JPDB.Model.CarOwner", b =>
+            modelBuilder.Entity("JPDB.Model.CarOwners", b =>
                 {
-                    b.HasOne("JPDB.Model.Car", "Car")
+                    b.HasOne("JPDB.Model.Car", null)
                         .WithMany("CarOwners")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JPDB.Model.Owner", "Owner")
+                    b.HasOne("JPDB.Model.Owner", null)
                         .WithMany("CarOwners")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("JPDB.Model.User", b =>

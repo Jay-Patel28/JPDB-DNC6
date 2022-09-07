@@ -23,9 +23,33 @@ namespace JPDB.Data
          modelBuilder.Entity<Crypto>()
         .Property(b => b.Created)
         .HasDefaultValueSql("getdate()");
+      
+        modelBuilder.Entity<CarOwner>().HasKey(co => new { co.CarId, co.OwnerId });  
+        
+            modelBuilder.Entity<CarOwner>()
+    .HasOne<Car>(sc => sc.Car)
+    .WithMany(s => s.CarOwners)
+    .HasForeignKey(sc => sc.CarId);
+
+
+modelBuilder.Entity<CarOwner>()
+    .HasOne<Owner>(sc => sc.Owner)
+    .WithMany(s => s.CarOwners)
+    .HasForeignKey(sc => sc.OwnerId);
+
+
         }
 
         public DbSet<JPDB.Model.User>? User { get; set; }
+
+        public DbSet<JPDB.Model.CarOwner>? CarOwners { get; set; }
+
+        public DbSet<JPDB.Model.Car>? Car { get; set; }
+
+        public DbSet<JPDB.Model.Owner>? Owner { get; set; }
+        public DbSet<JPDB.Model.CarInputModel>? CarInputModel { get; set; }
+        public DbSet<JPDB.Model.OwnerInputModel>? OwnerInputModel { get; set; }
+        public DbSet<JPDB.Model.OwnerInputWithNewCarModel>? OwnerInputWithNewCarModel { get; set; }
 
     }
 }
